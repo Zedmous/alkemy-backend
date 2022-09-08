@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "a7ad0d5c-5a7a-4a7b-8e93-5b7748d02400",
+		"name": "Backend-Alkemy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12032889"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"email2@email.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/login",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYyNjAzMjk4LCJleHAiOjE2NjI2MDY4OTh9.sT6UUcDDe4w-okkHRVOjpUVsTk955RJxj7cJyvHr6LU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/auth",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth"
+							],
+							"query": [
+								{
+									"key": "limite",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "desde",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYyNjAzMjk4LCJleHAiOjE2NjI2MDY4OTh9.sT6UUcDDe4w-okkHRVOjpUVsTk955RJxj7cJyvHr6LU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Usuario2\",\r\n    \"email\":\"email2@email.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/register",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYyNjAzMjk4LCJleHAiOjE2NjI2MDY4OTh9.sT6UUcDDe4w-okkHRVOjpUVsTk955RJxj7cJyvHr6LU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Usuario1\",\r\n    \"email\":\"email1@email.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api}}/auth/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYyNjAzMjk4LCJleHAiOjE2NjI2MDY4OTh9.sT6UUcDDe4w-okkHRVOjpUVsTk955RJxj7cJyvHr6LU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api}}/auth/1",
+							"host": [
+								"{{api}}"
+							],
+							"path": [
+								"auth",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
