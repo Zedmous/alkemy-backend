@@ -1,14 +1,23 @@
 const { Router } = require('express');
-const { allUser, createUser, updateUser, deleteUser } = require('../controllers/user.controller');
+const { allUser, createUser, updateUser, deleteUser, patchUser } = require('../controllers/user.controller');
 const router = Router();
-router.get('/', allUser);
+
+router.get(
+    '/',
+    allUser);
+
 router.post(
     '/register',
     createUser)
+
 router.put(
     '/:id',
     updateUser)
-//router.patch('/', usuariosPatch)
+/*
+router.patch(
+    '/',
+    patchUser)
+*/
 router.delete(
     '/:id',
     deleteUser)
