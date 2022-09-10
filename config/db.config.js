@@ -1,6 +1,9 @@
-const { Sequelize } = require('sequelize')
+const Sequelize = require("sequelize");
 const { dataUser } = require('../models/usuario-model')
-
+const { dataGender } = require('../models/gender-model')
+const { dataCharacter } = require('../models/character-model')
+const { dataMovie } = require('../models/movie-model')
+const { dataProduction } = require('../models/production-model')
 
 const db = new Sequelize(
     "moviesDB",
@@ -16,11 +19,55 @@ const db = new Sequelize(
 const User = db.define(
     'user',
     dataUser, {
-        sequelize,
+        db,
         modelName: "user",
         timestamps: false
     }
 )
+
+const Gender = db.define(
+    'gender',
+    dataGender, {
+        db,
+        modelName: "gender",
+        timestamps: false
+    }
+)
+
+const Character = db.define(
+    'character',
+    dataCharacter, {
+        db,
+        modelName: "character",
+        timestamps: false
+    }
+)
+
+
+const Movie = db.define(
+    'movie',
+    dataCharacter, {
+        db,
+        modelName: "movie",
+        timestamps: false
+    }
+)
+
+dataProduction.movieId.references.model=Movie;
+dataProduction.characterId.references.model=Character;
+
+const Production = db.define(
+    'production',
+    dataProduction, {
+        db,
+        modelName: "production",
+        timestamps: false
+    }
+);
+
+
+Movie.belongsToMany(Character, { through: Production });
+Character.belongsToMany(Movie, { through: Production });
 
 /*
 Creature.hasMany(CreatureVersion, { as: 'creatureVersions' })
@@ -29,6 +76,10 @@ CreatureVersion.belongsTo(Creature, {
   foreignKey: 'creatureId',
   as: 'creature'
 })
+
+Movie.belongsToMany(Actor, { through: ActorMovies });
+Actor.belongsToMany(Movie, { through: ActorMovies });
+
 //Synchronizing all models at once
 const syncModels = async () => {
   //await Sequelize.sync({ alter: true })
@@ -59,7 +110,11 @@ syncModels()
 
 module.exports={
     UserModel : User,
+    GenderModel:Gender,
+    MovieModel : Movie,
+    CharacterModel:Character,
+    ProductionModel:Production,
     db
 }
-export const UserModel = User
+//export const UserModel = User
 

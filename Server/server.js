@@ -9,6 +9,7 @@ class Server {
         //routes
         //this.authRouter='/api/auth';
         this.usuarioRouter='/api/auth';
+        this.movieRouter='/api/movies';
         //conectar a la BD
         this.conectarDB();
         //Middleware
@@ -29,6 +30,8 @@ class Server {
     routes() {
         //this.app.use(this.authRouter,require('../routes/auth.route'))
         this.app.use(this.usuarioRouter,require('../routes/user.route'))
+        this.app.use(this.moviesRouter,require('../routes/movie.route'))
+    
     }
     listen() {
         this.app.listen(this.port, () => {

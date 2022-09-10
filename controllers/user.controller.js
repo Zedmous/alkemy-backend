@@ -1,13 +1,14 @@
 const { response } = require('express');
 const bcryptjs = require('bcryptjs');
-const User = require('../models/usuario.model')
+//const User = require('../models/usuario.model')
+const { UserModel } = require('../config/db.config')
 const { generarJWT } = require('../helpers/generar-jwt');
 
 const loginUser = async (req, res = response) => {
   const {email, password} = req.body;
   try {
     //verificar si el email existe
-    const usuario = await User.findOne({ where: { email } })
+    const usuario = await UserModel.findOne({ where: { email } })
     if(!usuario){
       res.status(400).json({
         msj:"Usuario o contraseña son incorrectos, email no existe"
@@ -37,10 +38,10 @@ const loginUser = async (req, res = response) => {
 
 const usuariosGet = async (req, res = response) => {
   try {
-    const usuarios = await User.findAll();
-    response.status(200).json({
+    const usuarios = await UserModel.findAll();
+    response.status(200).json(
       usuarios
-    })
+    )
   } catch (error) {
     console.log(error);
     response.status(400).send(error);
@@ -49,8 +50,10 @@ const usuariosGet = async (req, res = response) => {
 
 const allUser = async (req, res = response) => {
   try {
-    const usuarios = await User.findAll();
-    res.status(200).json(usuarios);
+    const usuarios = await UserModel.findAll();
+    let total=usuarios.length;
+    
+    res.status(200).json({total,usuarios});
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
@@ -62,7 +65,7 @@ const createUser = async (req, res = response) => {
     let { password } = req.body;
     const salt = bcryptjs.genSaltSync();
     password = bcryptjs.hashSync(password, salt)
-    const user = await User.create({ name, email, password });
+    const user = await UserModel.create({ name, email, password });
     res.status(200).json({ user });
   } catch (error) {
     console.log(error);
@@ -72,7 +75,7 @@ const createUser = async (req, res = response) => {
 const updateUser = async (req, res = response) => {
   try {
     const id = req.params.id;
-    const usuario = await User.findOne({ where: { id } });
+    const usuario = await UserModel.findOne({ where: { id } });
     if (!usuario) {
       return res.status(400).json("User not found");
     }
@@ -96,7 +99,7 @@ const updateUser = async (req, res = response) => {
 const deleteUser = async (req, res = response) => {
   try {
     const id = req.params.id;
-    const usuario = await User.destroy({ where: { id } });
+    const usuario = await UserModel.destroy({ where: { id } });
     if (!usuario) {
       return res.status(400).json("User not found");
     }

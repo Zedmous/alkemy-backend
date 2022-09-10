@@ -1,17 +1,21 @@
 const { DataTypes } = require("sequelize");
 
 
-const dataUser = {
-    name: {
-        type: DataTypes.STRING,
+const dataMovie = {
+    img: {
+      type: DataTypes.BLOB,
     },
-    email: {
-        type: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
     },
-    password: {
-        type: DataTypes.STRING,
+    year:{
+        type:DataTypes.DATE
+    },
+    qualification: {
+      type: DataTypes.ENUM('1','2','3','4','5'),
     }
 }
+
 module.exports = {
-    dataUser
+    dataMovie
 }
