@@ -1,4 +1,5 @@
 const { response } = require('express');
+const bcryptjs = require('bcryptjs');
 const User = require('../models/usuario.model')
 
 const loginUser = async (req, res = response) => {
@@ -11,9 +12,8 @@ const loginUser = async (req, res = response) => {
         msj:"Usuario o contraseña son incorrectos, email no existe"
       })
     }else{
-      //const passwordValid= bcryptjs.compareSync(password,usuario.password)
-      //if(!passwordValid){
-      if(!(usuario.password==password)){
+      const passwordValid= bcryptjs.compareSync(password,usuario.password)
+      if(!passwordValid){
         res.status(400).json({
           msj:"Usuario o contraseña son incorrectos- contraseña incorrecta"
         })
@@ -57,7 +57,10 @@ const allUser = async (req, res = response) => {
 }
 const createUser = async (req, res = response) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email } = req.body;
+    let { password } = req.body;
+    const salt = bcryptjs.genSaltSync();
+    password = bcryptjs.hashSync(password, salt)
     const user = await User.create({ name, email, password });
     res.status(200).json({ user });
   } catch (error) {
