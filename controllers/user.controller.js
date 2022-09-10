@@ -70,17 +70,21 @@ const createUser = async (req, res = response) => {
 }
 const updateUser = async (req, res = response) => {
   try {
-    const { name, email, password } = req.body;
     const id = req.params.id;
     const usuario = await User.findOne({ where: { id } });
-
     if (!usuario) {
       return res.status(400).json("User not found");
     }
-    usuario.name = name;
-    usuario.email = email;
-    usuario.password = password;
 
+    const { password, ...resto } = req.body;
+    ///VALIDAR CONTRA BASE DE DATOS
+    if (password) {
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync(password, salt)
+    }
+    usuario.name = resto.name;
+    usuario.email = resto.email;
+    usuario.password = resto.password;
     await usuario.save();
     res.status(200).json({usuario});
   } catch (error) {
