@@ -1,5 +1,39 @@
 const { response } = require('express');
 const User = require('../models/usuario.model')
+
+const loginUser = async (req, res = response) => {
+  const {email, password} = req.body;
+  try {
+    //verificar si el email existe
+    const usuario = await User.findOne({ where: { email } })
+    if(!usuario){
+      res.status(400).json({
+        msj:"Usuario o contraseña son incorrectos, email no existe"
+      })
+    }else{
+      //const passwordValid= bcryptjs.compareSync(password,usuario.password)
+      //if(!passwordValid){
+      if(!(usuario.password==password)){
+        res.status(400).json({
+          msj:"Usuario o contraseña son incorrectos- contraseña incorrecta"
+        })
+      }else{
+        //generar token 
+        //const token = await generarJWT(usuario.id);
+        res.status(201).json({
+          usuario,
+          //token
+        })
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      msj:"Hable con el administrador"
+    })
+  }
+}
+
 const usuariosGet = async (req, res = response) => {
   try {
     const usuarios = await User.findAll();
@@ -68,6 +102,7 @@ const patchUser = (req, res = response) => {
   res.json({ ok: true, msj: 'patch api' })
 }
 module.exports = {
+  loginUser,
   allUser,
   createUser,
   updateUser,
